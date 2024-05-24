@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->text('description')->nullable();
-            $table->enum('status', ['ACTIVE', 'INACTIVE'])->default('ACTIVE');
+            $table->enum('status', ['ACTIVO', 'INACTIVO'])->default('ACTIVO');
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         //GET
-        return new CategoryCollection(Category::where( 'status', 'ACTIVE')->get());
+        return new CategoryCollection(Category::where( 'status', 'ACTIVO')->get());
     }
 
     /**
