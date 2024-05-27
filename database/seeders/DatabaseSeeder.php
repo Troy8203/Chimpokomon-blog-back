@@ -15,7 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         //ejecutar el seeder de categorias
         $this->call([
-            CategorySeeder::class
+            TagSeeder::class,
         ]);
+
+        //Ejecutar Factorys
+
     }
 }

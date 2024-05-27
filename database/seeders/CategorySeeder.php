@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('categories')->insert([
+        //Con factory
+        Category::factory()->count(50)->create();
+
+        /* DB::table('categories')->insert([
             [
                 'name' => 'Tecnología',
                 'description' => 'Todo sobre lo último en tecnología y gadgets.',
@@ -84,6 +88,6 @@ class CategorySeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]);
+        ]); */
     }
 }
