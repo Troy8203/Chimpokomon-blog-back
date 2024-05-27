@@ -20,7 +20,7 @@ class Post extends Model
     /* Relacion de N a N Post tiene N tags*/
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->hasMany(PostTag::class, 'post_id');
     }
     /* Relacion de 1 a N Post pertene a una Categoria */
     public function category()

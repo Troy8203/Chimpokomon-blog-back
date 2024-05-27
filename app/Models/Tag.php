@@ -16,6 +16,6 @@ class Tag extends Model
     /* Relacion de N a N Post tiene N tags*/
     public function posts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->hasMany(PostTag::class, 'tag_id');
     }
 }
