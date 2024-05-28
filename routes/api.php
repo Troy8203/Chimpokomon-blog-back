@@ -14,6 +14,9 @@ Route::apiResource('/posts', PostController::class);
 Route::apiResource('/categories', CategoryController::class);
 Route::apiResource('/tags', TagController::class);
 
+Route::get('/docs', function () {
+    return view('swagger.index');
+});
 /* Route::group(['prefix' => 'v1', ], function () {
     Route::apiResource('/posts', PostController::class);
     Route::apiResource('/categories', CategoryController::class);
