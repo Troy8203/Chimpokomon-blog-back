@@ -8,6 +8,7 @@ class PostFilter extends ApiFilter
 {
     /**eq = igual a, lt= menor que, gt = mayor que, ne = Es diferente de */
     protected $safeParams = [
+        'id' => ['eq','ne'],
         'title' => ['eq','lk'],
         'content' => ['eq','lk'],
         'slug' => ['eq'],
