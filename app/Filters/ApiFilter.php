@@ -23,7 +23,7 @@ class ApiFilter{
                     $value = $query[$operator];
                     // Si el operador es 'LIKE', añadir los comodines '%' al valor
                     if ($operator === 'lk') {
-                        $value = "%{$value}%";
+                        $value = "%{$value}%";  
                     }
                     $eloQuery[] = [$column, $this->operatorMap[$operator],$value];
                 }
