@@ -387,23 +387,20 @@ class CategoryController extends Controller
             $categoria = Category::findOrFail($id);
 
             // Actualizar el estado a "INACTIVO"
-            $categoria->status = 'INACTIVE';
+            $categoria->status = 'INACTIVO';
             $categoria->save();
             return response()->json([
                 'message' => 'Categoria inactivado con éxito',
-                'status' => 200
             ], 200);
         } catch (QueryException $e) {
             // Capturar y manejar la excepción de la base de datos
             return response()->json([
                 'message' => 'Ocurrió un error al actualizar el estado: ' . $e->getMessage(),
-                'status' => 500
             ], 500);
         } catch (ModelNotFoundException $e) {
             // Manejar el caso donde no se encuentra el registro
             return response()->json([
-                'message' => 'Categoria no encontrado en la BD',
-                'status' => 404
+                'message' => 'Categoria no encontrado en la BD'
             ], 404);
         }
     }
