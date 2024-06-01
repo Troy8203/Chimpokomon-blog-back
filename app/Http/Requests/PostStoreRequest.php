@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class PostStoreRequest extends FormRequest
 {
@@ -22,11 +24,23 @@ class PostStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
+            'title' => 'required|string|unique:posts,title',
             'content' => 'required|string',
-            'slug' => 'required|string|unique:posts,slug',
             'user_id' => 'required|numeric',
             'category_id' => 'required|numeric',
+            'tags' => 'required|array',
         ];
+    }
+
+    
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Existen errores de validación',
+                'errors' => $validator->errors(),
+                'status' => 422
+            ], 422)
+        );
     }
 }

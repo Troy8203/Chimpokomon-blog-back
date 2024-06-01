@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class PostUpdateRequest extends FormRequest
 {
@@ -24,21 +26,34 @@ class PostUpdateRequest extends FormRequest
         $method = $this->method();
         if($method === 'PUT'){
             return [
-                'title' => 'required|string',
+                'title' => 'required|string|unique:posts,slug,'.$this->post->id,
                 'content' => 'required|string',
-                'slug' => 'required|string|unique:posts,slug,'.$this->post->id,
                 'user_id' => 'required|numeric',
                 'category_id' => 'required|numeric',
+                'tags' => 'required|array',
             ];
         }else{
             //Metodo patch solo editamos lo requerido 
             return [
                 'title' => 'sometimes|required|string',
                 'content' => 'sometimes|required|string',
-                'slug' => 'sometimes|required|string|unique:posts,slug',
                 'user_id' => 'sometimes|required|numeric',
                 'category_id' => 'sometimes|required|numeric',
+                'tags' => 'sometimes|required|array',
+                'status' => 'sometimes|string|in:ACTIVO,INACTIVO'
             ];
         }
+    }
+
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Existen errores de validación',
+                'errors' => $validator->errors(),
+                'status' => 422
+            ], 422)
+        );
     }
 }
