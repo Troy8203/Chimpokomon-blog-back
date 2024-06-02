@@ -60,6 +60,7 @@ class PostController extends Controller
             $nuevoPost = Post::create([
                 'title' => $post->title,
                 'content' => $post->content,
+                'description' => $post->description,
                 'slug' => Str::slug($post->title),
                 'user_id' => $post->user_id,
                 'category_id' => $post->category_id,

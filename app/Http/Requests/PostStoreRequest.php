@@ -26,6 +26,7 @@ class PostStoreRequest extends FormRequest
         return [
             'title' => 'required|string|unique:posts,title',
             'content' => 'required|string',
+            'description'=> 'required|string',
             'user_id' => 'required|numeric',
             'category_id' => 'required|numeric',
             'tags' => 'required|array',
