@@ -31,12 +31,16 @@ class PostController extends Controller
         }
         $includeCategories = $request->query('includeCategory');
         $includeTags = $request->query('includeTags');
+        $includeUser = $request->query('includeUser');
         $paginate = $request->query('paginate');
         if ($includeCategories) {
             $posts = $posts->with('category');
         }
         if ($includeTags) {
             $posts = $posts->with('tags');
+        }
+        if ($includeUser) {
+            $posts = $posts->with('user');
         }
         if($paginate){
             return new PostCollection($posts->paginate()->appends($request->query()));
