@@ -97,11 +97,15 @@ class PostController extends Controller
 
         $includeCategory = request()->query('includeCategory');
         $includeTags = request()->query('includeTags');
+        $includeUser = request()->query('includeUser');
         if ($includeCategory) {
             $post->load('category');
         }
         if ($includeTags) {
             $post->load('tags');
+        }
+        if($includeUser){
+            $post->load('user');
         }
         return new PostResource($post);
     }
