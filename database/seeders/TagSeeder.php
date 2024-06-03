@@ -15,10 +15,10 @@ class TagSeeder extends Seeder
     public function run(): void
     {
         //Con factory
-        Tag::factory()->count(10)->hasPosts(10)->create();
-        
+       // Tag::factory()->count(10)->hasPosts(10)->create();
+
         //Creando 10 sedeers para tags
-       /*  DB::table('tags')->insert([
+        DB::table('tags')->insert([
             [
                 'name' => 'Laravel',
                 'status' => 'ACTIVO',
@@ -78,7 +78,67 @@ class TagSeeder extends Seeder
                 'status' => 'ACTIVO',
                 'created_at' => now(),
                 'updated_at' => now()
-            ] 
-        ]); */
+            ],
+            [
+                'name' => 'Docker',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Kubernetes',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'React',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Vue.js',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Angular',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Python',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Django',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Flask',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Machine Learning',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'AI',
+                'status' => 'ACTIVO',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        ]);
     }
 }
