@@ -29,6 +29,16 @@ class PostTagSeeder extends Seeder
             ['post_id' => 9, 'tag_id' => 19], // Post 9 con Tag 19 (Machine Learning)
             ['post_id' => 9, 'tag_id' => 20], // Post 9 con Tag 20 (AI)
             ['post_id' => 10, 'tag_id' => 17], // Post 10 con Tag 17 (Blockchain)
+            ['post_id'=> 11, 'tag_id'=> 20,],
+            ['post_id'=> 12, 'tag_id'=> 20,],
+            ['post_id'=> 13, 'tag_id'=> 20,],
+            ['post_id'=> 14, 'tag_id'=> 20,],
+            ['post_id'=> 15, 'tag_id'=> 20,],
+            ['post_id'=> 16, 'tag_id'=> 20,],
+            ['post_id'=> 17, 'tag_id'=> 20,],
+            ['post_id'=> 18, 'tag_id'=> 20,],
+            ['post_id'=> 19, 'tag_id'=> 20,],
+            ['post_id'=> 20, 'tag_id'=> 20,],
         ];
 
         // Insertamos las relaciones en la tabla pivote
