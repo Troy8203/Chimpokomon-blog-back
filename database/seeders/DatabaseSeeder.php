@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
         //ejecutar el seeder de categorias
         $this->call([
             TagSeeder::class,
+            CategorySeeder::class,
+            UserSeeder::class,
+            PostSeeder::class,
+            PostTagSeeder::class,
         ]);
 
         //Ejecutar Factorys
