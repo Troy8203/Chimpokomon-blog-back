@@ -13,6 +13,7 @@ use App\Http\Resources\PostResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -55,18 +56,25 @@ class PostController extends Controller
     public function store(PostStoreRequest $post)
     {
         try {
-            //Iniciar una transaccion para guardar tags
+            //IMAGEN
+            $imageName = Str::random(32).'.'.$post->image->getClientOriginalExtension();
+            //Iniciar una transaccion para guardar El post con sus respectivos tags y su categoria
             DB::beginTransaction();
             $nuevoPost = Post::create([
                 'title' => $post->title,
                 'content' => $post->content,
                 'description' => $post->description,
+                'image' => $imageName,
                 'slug' => Str::slug($post->title),
                 'user_id' => $post->user_id,
                 'category_id' => $post->category_id,
                 'status' => $post->status ?? 'ACTIVO'
             ]);
             $nuevoPost->save();
+            //Guardando la imagen
+            Storage::disk('public')->put($imageName, file_get_contents($post->image));
+
+
             //Sincronizando los tags del post
             $nuevoPost->tags()->sync($post->tags);
             DB::commit();

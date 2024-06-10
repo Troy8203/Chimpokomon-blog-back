@@ -28,6 +28,8 @@ class PostUpdateRequest extends FormRequest
             return [
                 'title' => 'required|string|unique:posts,slug,'.$this->post->id,
                 'content' => 'required|string',
+                'description'=> 'required|string',
+                'image' => 'sometimes|image|mimes:jpeg,png,gif,svg|max2048',
                 'user_id' => 'required|numeric',
                 'category_id' => 'required|numeric',
                 'tags' => 'required|array',
@@ -37,6 +39,8 @@ class PostUpdateRequest extends FormRequest
             return [
                 'title' => 'sometimes|required|string',
                 'content' => 'sometimes|required|string',
+                'description'=> 'sometimes|required|string',
+                'image' => 'sometimes|image|mimes:jpeg,png,gif,svg|max2048',
                 'user_id' => 'sometimes|required|numeric',
                 'category_id' => 'sometimes|required|numeric',
                 'tags' => 'sometimes|required|array',

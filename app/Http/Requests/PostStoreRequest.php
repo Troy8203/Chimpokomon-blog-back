@@ -27,6 +27,7 @@ class PostStoreRequest extends FormRequest
             'title' => 'required|string|unique:posts,title',
             'content' => 'required|string',
             'description'=> 'required|string',
+            'image' => 'sometimes|image|mimes:jpeg,png,gif,svg|max:2048',
             'user_id' => 'required|numeric',
             'category_id' => 'required|numeric',
             'tags' => 'required|array',
