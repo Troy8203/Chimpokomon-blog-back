@@ -43,9 +43,9 @@ class PostController extends Controller
         if ($includeUser) {
             $posts = $posts->with('user');
         }
-        if($paginate){
+        if ($paginate) {
             return new PostCollection($posts->paginate()->appends($request->query()));
-        }else{
+        } else {
             return new PostCollection($posts->get());
         }
     }
@@ -57,14 +57,16 @@ class PostController extends Controller
     {
         try {
             //IMAGEN
-            $imageName = Str::random(32).'.'.$post->image->getClientOriginalExtension();
+            if ($post->image) {
+                $imageName = Str::random(32) . '.' . $post->image->getClientOriginalExtension();
+            }
             //Iniciar una transaccion para guardar El post con sus respectivos tags y su categoria
             DB::beginTransaction();
             $nuevoPost = Post::create([
                 'title' => $post->title,
                 'content' => $post->content,
                 'description' => $post->description,
-                'image' => $imageName,
+                'image' => $imageName ?? null,
                 'slug' => Str::slug($post->title),
                 'user_id' => $post->user_id,
                 'category_id' => $post->category_id,
@@ -72,8 +74,9 @@ class PostController extends Controller
             ]);
             $nuevoPost->save();
             //Guardando la imagen
-            Storage::disk('public')->put($imageName, file_get_contents($post->image));
-
+            if ($post->image) {
+                Storage::disk('public')->put($imageName, file_get_contents($post->image));
+            }
 
             //Sincronizando los tags del post
             $nuevoPost->tags()->sync($post->tags);
@@ -112,50 +115,50 @@ class PostController extends Controller
         if ($includeTags) {
             $post->load('tags');
         }
-        if($includeUser){
+        if ($includeUser) {
             $post->load('user');
         }
         return new PostResource($post);
     }
 
-    
+
     public function update(PostUpdateRequest $request, Post $post)
-{
-    try {
-        // Iniciando trnasaccion
-        DB::beginTransaction();
+    {
+        try {
+            // Iniciando trnasaccion
+            DB::beginTransaction();
 
-        $post->update($request->except('tags'));
+            $post->update($request->except('tags'));
 
-        // Actualizar el slug si se modificó el título
-        if ($request->has('title')) {
-            $post->slug = Str::slug($post->title);
-            $post->save();
+            // Actualizar el slug si se modificó el título
+            if ($request->has('title')) {
+                $post->slug = Str::slug($post->title);
+                $post->save();
+            }
+
+            // Actualizar los tags
+            if ($request->has('tags')) {
+                $post->tags()->sync($request->tags);
+            }
+
+            DB::commit();
+            $post->load('tags', 'category', 'user');
+            return response()->json([
+                'message' => 'Post actualizado correctamente',
+                'data' => new PostResource($post)
+            ]);
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Error al actualizar el post',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        // Actualizar los tags
-        if ($request->has('tags')) {
-            $post->tags()->sync($request->tags);
-        }
-
-        DB::commit();
-        $post->load('tags', 'category', 'user');
-        return response()->json([
-            'message' => 'Post actualizado correctamente',
-            'data' => new PostResource($post)
-        ]);
-    } catch (\Exception $e) {
-
-        DB::rollBack();
-        return response()->json([
-            'message' => 'Error al actualizar el post',
-            'error' => $e->getMessage()
-        ], 500);
     }
-}
 
     public function destroy(Post $post)
-    {   
+    {
         //eliminar el Post
         $post->delete();
         return response()->json([
