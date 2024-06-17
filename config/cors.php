@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*'], //Aca poner el dominio del frontend que va a consumir la api
 
     'allowed_origins_patterns' => [],
 
